@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import xlwings as xw
 # from colorama import init
@@ -29,6 +30,10 @@ name_list = [   ('FileList', '目录文件', '“%s_机能学实验班级简称_
 
 app = xw.App(visible=True, add_book=False)
 
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+    
 def show_all_files(path, all_files = []):
     file_list = os.listdir(path)
     for file in file_list:
@@ -108,7 +113,7 @@ print("共处理 " + str(success_num+fail_num) + " 个文件，成功 " + str(su
 print("\n生成FileList文件中...")
 try:
     new_name_list_sorted = sorted(new_name_list, key=lambda i: len(i))
-    wb = app.books.open('./FileList_Demo.xlsx')
+    wb = app.books.open(resource_path('FileList_Demo.xlsx'))
     sht = wb.sheets["sheet1"]
     rows = 9
     for match_name, write_name, rule_name in name_list:
