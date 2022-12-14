@@ -177,6 +177,12 @@ try:
     print("修改封面中...")
     sht = wb.sheets[0]
     sht.range('D15:J17').value = [[jianbiao_data_dict[number][0]], [jianbiao_data_dict[number][9]], [jianbiao_data_dict[number][10]]]
+
+    print("修改所有学号中...")
+    for sht in wb.sheets:
+        # print(sht.name)
+        if sht.name != '简表':
+            sht.used_range.api.Replace('20208100??', number)
     
     wb.save()
     wb.close()
